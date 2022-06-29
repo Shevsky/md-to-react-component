@@ -24,10 +24,10 @@ const defaultSchema: FullSchema = {
     strong: { renderer: { type: 'tag', name: 'strong' } },
     em: { renderer: { type: 'tag', name: 'i' } },
     text: { renderer: { type: 'string' } },
-    link: { renderer: { type: 'tag', name: 'a' } },
+    link: { renderer: { type: 'tag', name: 'a' }, wrapper: null! },
     ol: { renderer: { type: 'tag', name: 'ol' } },
     ul: { renderer: { type: 'tag', name: 'ul' } },
-    li: { renderer: { type: 'tag', name: 'li' } }
+    li: { renderer: { type: 'tag', name: 'li' }, wrapper: null! }
   }
 };
 

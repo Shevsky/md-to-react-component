@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && npm run schema",
-    "schema": "typescript-json-schema src/types.ts Schema --out ./dist/schema.json --aliasRefs true --required true --strictNullChecks true"
+    "schema": "typescript-json-schema src/types.ts Schema --out ./schema.json --aliasRefs true --required true --strictNullChecks true"
   },
   "repository": {
     "type": "git",

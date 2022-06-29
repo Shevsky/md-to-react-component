@@ -1,0 +1,281 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Renderer": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "from": {
+                            "type": "string"
+                        },
+                        "props": {
+                            "additionalProperties": true,
+                            "properties": {},
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "component"
+                            ],
+                            "type": "string"
+                        },
+                        "usedExport": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "from",
+                        "type"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "props": {
+                            "additionalProperties": true,
+                            "properties": {},
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "tag"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "type"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "fragment",
+                                "null",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "Tokens": {
+            "properties": {
+                "em": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h1": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h2": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h3": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h4": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h5": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "h6": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "hr": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "li": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        },
+                        "wrapper": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer",
+                        "wrapper"
+                    ],
+                    "type": "object"
+                },
+                "link": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        },
+                        "wrapper": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer",
+                        "wrapper"
+                    ],
+                    "type": "object"
+                },
+                "ol": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "paragraph": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "root": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "space": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "strong": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "text": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "ul": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "tokens": {
+            "$ref": "#/definitions/Tokens"
+        }
+    },
+    "type": "object"
+}
+

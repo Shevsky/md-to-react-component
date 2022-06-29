@@ -28,10 +28,10 @@ export type Tokens = {
   strong?: { renderer: Renderer };
   em?: { renderer: Renderer };
   text?: { renderer: Renderer };
-  link?: { renderer: Renderer; wrapper?: Renderer };
+  link?: { renderer: Renderer; wrapper: Renderer };
   ol?: { renderer: Renderer };
   ul?: { renderer: Renderer };
-  li?: { renderer: Renderer; wrapper?: Renderer };
+  li?: { renderer: Renderer; wrapper: Renderer };
 };
 
 export type Schema = {
