@@ -7,8 +7,6 @@ import { FullSchema, Schema } from './types';
 
 const cosmiconfig = cosmiconfigSync('mdtoreact');
 
-export * from './types';
-
 const defaultSchema: FullSchema = {
   tokens: {
     root: { renderer: { type: 'fragment' } },

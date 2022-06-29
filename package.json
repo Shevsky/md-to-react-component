@@ -1,11 +1,16 @@
 {
   "name": "md-to-react-component",
   "version": "0.0.1",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": "tsc && npm run schema",
-    "schema": "typescript-json-schema src/types.ts Schema --out ./schema.json --aliasRefs true --required true --strictNullChecks true"
+    "build_es": "tsc -p . -d true --declarationDir dist/types --outDir dist/esm",
+    "build_cjs": "tsc -p . --outDir dist/cjs -m commonjs",
+    "build": "npm run build_cjs && npm run build_es",
+    "schema": "typescript-json-schema src/types.ts Schema --out ./schema/0.0.1.json --aliasRefs true --required true --strictNullChecks true",
+    "postbuild": "node ./scripts/create-build-package-json.js",
+    "release": "npm publish --access public dist"
   },
   "repository": {
     "type": "git",
