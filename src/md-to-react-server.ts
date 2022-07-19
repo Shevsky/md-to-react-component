@@ -172,7 +172,7 @@ export class MdToReactServer {
         );
       }
       case 'tag': {
-        return this.makeCreateElementOutput(renderer.name, { ...props, ...renderer.props }, ...childs);
+        return this.makeCreateElementOutput(JSON.stringify(renderer.name), { ...props, ...renderer.props }, ...childs);
       }
       case 'fragment': {
         return this.makeCreateElementOutput(
