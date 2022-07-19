@@ -1,12 +1,17 @@
-import { ImportDeclaration } from './types';
+type ImportDeclaration = {
+  usedExports?: Map<string, string>;
+  defaultExportAlias?: string;
+};
 
 export class ImportsCollector {
   private defaultExportAliasCounter = 0;
-  private imports: Map<string, ImportDeclaration> = new Map([
-    ['react', { defaultExportAlias: 'React', usedExports: new Map([['createElement', 'c']]) }]
-  ]);
+  private readonly imports: Map<string, ImportDeclaration> = new Map();
 
-  renderImports(): string {
+  resetImports(): void {
+    this.imports.clear();
+  }
+
+  renderImportsToOutput(): string {
     return Array.from(this.imports.entries())
       .map(([from, declaration]: [string, ImportDeclaration]) => {
         let output = 'import ';
@@ -46,7 +51,7 @@ export class ImportsCollector {
     if (usedExport === 'default') {
       let defaultExportAlias = declaration.defaultExportAlias;
       if (!defaultExportAlias) {
-        defaultExportAlias = `d${++this.defaultExportAliasCounter}`;
+        defaultExportAlias = alias ?? `d${++this.defaultExportAliasCounter}`;
         declaration.defaultExportAlias = defaultExportAlias;
       }
 

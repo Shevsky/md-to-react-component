@@ -1,5 +1,6 @@
-import { MdToReact } from './md-to-react';
+import { MdToReactServer } from './md-to-react-server';
+import { MdToReactWebpackPlugin } from './webpack/plugin';
 
-MdToReact.loader = require.resolve('./loader');
+const loader = require.resolve('./webpack/loader');
 
-export { MdToReact };
+export { MdToReactServer, MdToReactWebpackPlugin, loader };

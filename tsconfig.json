@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
     "lib": ["es2020"],
-    "module": "es2020",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2020",
+    "target": "es5",
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
+    "removeComments": true,
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "declaration": true
   }
 }
