@@ -153,7 +153,7 @@ export class MdToReactServer {
     }
 
     if (anyToken.text) {
-      return [anyToken.text];
+      return [JSON.stringify(anyToken.text)];
     }
 
     return [];
@@ -188,7 +188,7 @@ export class MdToReactServer {
             return 'null';
           }
           case 1: {
-            return JSON.stringify(childs[0]);
+            return childs[0];
           }
           default: {
             return this.rendererToNodeOutput({ type: 'fragment' }, null, ...childs);
