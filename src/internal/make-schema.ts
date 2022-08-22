@@ -8,6 +8,7 @@ const defaultSchema: FullSchema = {
     root: { renderer: { type: 'fragment' } },
     space: { renderer: { type: 'tag', name: 'br' } },
     hr: { renderer: { type: 'tag', name: 'hr' } },
+    br: { renderer: { type: 'tag', name: 'br' } },
     h1: { renderer: { type: 'tag', name: 'h1' } },
     h2: { renderer: { type: 'tag', name: 'h2' } },
     h3: { renderer: { type: 'tag', name: 'h3' } },

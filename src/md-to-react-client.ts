@@ -26,6 +26,7 @@ export class MdToReactClient {
   private tokenToNode(token: marked.Token): ReactNode {
     switch (token.type) {
       case 'space':
+      case 'br':
       case 'hr': {
         return this.rendererToNode(this.schema.tokens[token.type].renderer, null);
       }

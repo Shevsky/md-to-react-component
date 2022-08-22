@@ -18,6 +18,7 @@ export type Tokens = {
   root?: { renderer: Renderer };
   space?: { renderer: Renderer };
   hr?: { renderer: Renderer };
+  br?: { renderer: Renderer };
   h1?: { renderer: Renderer };
   h2?: { renderer: Renderer };
   h3?: { renderer: Renderer };
