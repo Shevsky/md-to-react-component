@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
+import { decodeHtmlEntities } from './internal/decode-html-entities';
 import { FullSchema, Renderer, Tokens } from './types';
 
 export class MdToReactClient {
@@ -96,7 +97,7 @@ export class MdToReactClient {
     }
 
     if (anyToken.text) {
-      return [anyToken.text];
+      return [decodeHtmlEntities(anyToken.text)];
     }
 
     return [];

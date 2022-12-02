@@ -1,4 +1,5 @@
 import { marked } from 'marked';
+import { decodeHtmlEntities } from './internal/decode-html-entities';
 import { ImportsCollector } from './internal/imports-collector';
 import { makeSchema } from './internal/make-schema';
 import { PropsCollector } from './internal/props-collector';
@@ -153,7 +154,7 @@ export class MdToReactServer {
     }
 
     if (anyToken.text) {
-      return [JSON.stringify(anyToken.text)];
+      return [JSON.stringify(decodeHtmlEntities(anyToken.text))];
     }
 
     return [];
