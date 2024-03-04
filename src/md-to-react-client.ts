@@ -1,6 +1,7 @@
 import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { externals, schema } from './runtime/schema';
 import { FullSchema, Renderer, Tokens } from './types';
 
 export class MdToReactClient {
@@ -141,3 +142,5 @@ export class MdToReactClient {
     }
   }
 }
+
+export const mdToReactClient = new MdToReactClient(schema, externals);

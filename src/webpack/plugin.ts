@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { mdToReactServer } from './defaults';
 import type webpack from 'webpack';
 
-const schemaPath = require.resolve('./../component/schema');
+const schemaPath = require.resolve('./../runtime/schema');
 
 export class MdToReactWebpackPlugin {
   private readonly name: string = 'MdToReactWebpackPlugin';
