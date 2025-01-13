@@ -5,7 +5,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "tsc -p . -m commonjs",
-    "schema": "typescript-json-schema src/types.ts Schema --out ./schema/0.0.1.json --aliasRefs true --required true --strictNullChecks true",
+    "schema": "typescript-json-schema src/types.ts Schema --out ./schema/0.0.3.json --aliasRefs true --required true --strictNullChecks true",
     "postbuild": "node ./scripts/create-build-package-json.js",
     "release": "npm publish --access public dist"
   },
