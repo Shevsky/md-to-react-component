@@ -45,7 +45,7 @@ export class MdToReactClient {
             return this.props[parsed.key];
           }
           case 'text': {
-            return this.rendererToNode(this.schema.tokens[token.type].renderer, null);
+            return this.rendererToNode(this.schema.tokens[token.type].renderer, null, parsed.text);
           }
           default: {
             return null;

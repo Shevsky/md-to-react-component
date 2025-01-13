@@ -101,7 +101,7 @@ export class MdToReactServer {
             return `props.${token.text}`;
           }
           case 'text': {
-            return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer);
+            return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer, null, parsed.text);
           }
           default: {
             return 'null';
