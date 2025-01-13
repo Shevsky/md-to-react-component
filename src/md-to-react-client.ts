@@ -1,6 +1,7 @@
 import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { parseCodespanToken } from './internal/parse-codespan-token';
 import { externals, schema } from './runtime/schema';
 import { FullSchema, Renderer, Tokens } from './types';
 
@@ -33,15 +34,22 @@ export class MdToReactClient {
         return this.rendererToNode(this.schema.tokens[token.type].renderer, null);
       }
       case 'codespan': {
-        if (token.text.startsWith('props.')) {
-          const key = token.text.substring('props.'.length);
-          if (!this.props || !(key in this.props)) {
-            throw new Error(`Missing "${key}" prop`);
-          }
+        const parsed = parseCodespanToken(token.text);
 
-          return this.props[key];
-        } else {
-          return null;
+        switch (parsed.type) {
+          case 'property': {
+            if (!this.props || !(parsed.key in this.props)) {
+              throw new Error(`Missing "${parsed.key}" prop`);
+            }
+
+            return this.props[parsed.key];
+          }
+          case 'text': {
+            return this.rendererToNode(this.schema.tokens[token.type].renderer, null);
+          }
+          default: {
+            return null;
+          }
         }
       }
       case 'heading': {

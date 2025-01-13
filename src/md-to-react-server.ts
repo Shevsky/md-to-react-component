@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { parseCodespanToken } from './internal/parse-codespan-token';
 import { ImportsCollector } from './internal/imports-collector';
 import { makeSchema } from './internal/make-schema';
 import { PropsCollector } from './internal/props-collector';
@@ -91,13 +92,20 @@ export class MdToReactServer {
         return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer);
       }
       case 'codespan': {
-        if (token.text.startsWith('props.')) {
-          const key = token.text.substring('props.'.length);
-          this.props.expectProp(key);
+        const parsed = parseCodespanToken(token.text);
 
-          return token.text;
-        } else {
-          return 'null';
+        switch (parsed.type) {
+          case 'property': {
+            this.props.expectProp(parsed.key);
+
+            return `props.${token.text}`;
+          }
+          case 'text': {
+            return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer);
+          }
+          default: {
+            return 'null';
+          }
         }
       }
       case 'heading': {

@@ -25,6 +25,7 @@ export type Tokens = {
   h4?: { renderer: Renderer };
   h5?: { renderer: Renderer };
   h6?: { renderer: Renderer };
+  codespan?: { renderer: Renderer };
   paragraph?: { renderer: Renderer };
   strong?: { renderer: Renderer };
   em?: { renderer: Renderer };
