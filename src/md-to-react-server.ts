@@ -98,7 +98,7 @@ export class MdToReactServer {
           case 'property': {
             this.props.expectProp(parsed.key);
 
-            return `props.${token.text}`;
+            return `props.${parsed.key}`;
           }
           case 'text': {
             return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer, null, parsed.text);
