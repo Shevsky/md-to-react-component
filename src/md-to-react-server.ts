@@ -1,10 +1,11 @@
 import { marked } from 'marked';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { moduleOutputBoilerplate, moduleOutputDefaultExport, moduleOutputExport } from './internal/module-outputs';
 import { parseCodespanToken } from './internal/parse-codespan-token';
 import { ImportsCollector } from './internal/imports-collector';
 import { makeSchema } from './internal/make-schema';
 import { PropsCollector } from './internal/props-collector';
-import { FullSchema, Renderer, Schema, Tokens } from './types';
+import { FullSchema, ModuleType, Renderer, Schema, Tokens } from './types';
 
 export class MdToReactServer {
   private readonly schema: FullSchema;
@@ -24,7 +25,7 @@ export class MdToReactServer {
     this.makeCreateElementOutput = this.makeCreateElementOutput.bind(this);
   }
 
-  renderSourceToOutput(source: string): string {
+  renderSourceToOutput(source: string, module?: ModuleType): string {
     this.imports.resetImports();
     this.props.resetProps();
 
@@ -38,9 +39,10 @@ export class MdToReactServer {
       ...tokensList.map(this.tokenToNodeOutput)
     );
 
-    let output = this.imports.renderImportsToOutput();
+    let output = moduleOutputBoilerplate(module);
+    output += this.imports.renderImportsToOutput(module);
     output += '\n';
-    output += 'export default (props) => {\n';
+    output += moduleOutputDefaultExport('(props) => {\n');
     output += this.props.renderExpectedPropsToOutput();
     output += '\nreturn ';
     output += root;
@@ -49,7 +51,7 @@ export class MdToReactServer {
     return output;
   }
 
-  renderSchemaToOutput(): string {
+  renderSchemaToOutput(module?: ModuleType): string {
     this.imports.resetImports();
     this.props.resetProps();
 
@@ -71,15 +73,17 @@ export class MdToReactServer {
       });
     });
 
-    let output = this.imports.renderImportsToOutput();
+    let output = moduleOutputBoilerplate(module);
+    output += this.imports.renderImportsToOutput(module);
     output += '\n';
-    output += 'const externals = ';
+    output += 'var externals = ';
     output += JSON.stringify(externals).replace(/"\[@(.*?)]"/g, '$1');
     output += ';\n';
-    output += 'const schema = ';
+    output += 'var schema = ';
     output += JSON.stringify(this.schema);
     output += ';\n';
-    output += 'export { externals, schema };';
+    output += moduleOutputExport('externals', module);
+    output += moduleOutputExport('schema', module);
 
     return output;
   }

@@ -1,3 +1,6 @@
+import { Tokenizer } from './../internal/tokenizer';
+import { ModuleType } from './../types';
+
 type ImportDeclaration = {
   usedExports?: Map<string, string>;
   defaultExportAlias?: string;
@@ -11,32 +14,58 @@ export class ImportsCollector {
     this.imports.clear();
   }
 
-  renderImportsToOutput(): string {
+  renderImportsToOutput(module: ModuleType = 'es'): string {
+    const tokenizer = new Tokenizer();
+
     return Array.from(this.imports.entries())
       .map(([from, declaration]: [string, ImportDeclaration]) => {
-        let output = 'import ';
+        switch (module) {
+          case 'commonjs': {
+            const requiredVariableToken = tokenizer.createUniqueToken(from);
 
-        if (declaration.defaultExportAlias) {
-          output += declaration.defaultExportAlias;
+            let output = `var ${requiredVariableToken} = require("${from}");`;
 
-          if (declaration.usedExports?.size) {
-            output += ',';
+            if (declaration.defaultExportAlias) {
+              output += `var ${declaration.defaultExportAlias} = ${requiredVariableToken}.default;`;
+            }
+
+            if (declaration.usedExports?.size) {
+              Array.from(declaration.usedExports.entries()).forEach(([usedExport, alias]: [string, string]) => {
+                output += `var ${alias} = ${requiredVariableToken}.${usedExport};`;
+              });
+            }
+
+            return output;
+          }
+          case 'es': {
+            let output = 'import ';
+
+            if (declaration.defaultExportAlias) {
+              output += declaration.defaultExportAlias;
+
+              if (declaration.usedExports?.size) {
+                output += ',';
+              }
+            }
+
+            if (declaration.usedExports?.size) {
+              output += '{';
+              output += Array.from(declaration.usedExports.entries())
+                .map(([usedExport, alias]: [string, string]) =>
+                  usedExport === alias ? usedExport : `${usedExport} as ${alias}`
+                )
+                .join(',');
+              output += '}';
+            }
+
+            output += ` from "${from}";`;
+
+            return output;
+          }
+          default: {
+            return '';
           }
         }
-
-        if (declaration.usedExports?.size) {
-          output += '{';
-          output += Array.from(declaration.usedExports.entries())
-            .map(([usedExport, alias]: [string, string]) =>
-              usedExport === alias ? usedExport : `${usedExport} as ${alias}`
-            )
-            .join(',');
-          output += '}';
-        }
-
-        output += ` from "${from}";`;
-
-        return output;
       })
       .join('\n');
   }

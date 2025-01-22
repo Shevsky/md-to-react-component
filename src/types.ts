@@ -1,3 +1,5 @@
+export type ModuleType = 'es' | 'commonjs';
+
 export type Renderer =
   | {
       type: 'component';

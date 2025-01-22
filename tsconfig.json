@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "lib": ["es2021"],
-    "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "noImplicitAny": false,
@@ -10,7 +9,6 @@
     "strict": true,
     "removeComments": true,
     "rootDir": "src",
-    "outDir": "dist",
-    "declaration": true
-  }
+    "declaration": true,
+  },
 }

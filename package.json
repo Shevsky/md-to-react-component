@@ -1,10 +1,11 @@
 {
   "name": "md-to-react-component",
-  "version": "0.3.4",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "version": "0.4.0",
+  "main": "cjs/index.js",
+  "types": "es/index.d.ts",
+  "module": "es/index.js",
   "scripts": {
-    "build": "tsc -p . -m commonjs",
+    "build": "tsc -p . -m esnext --outDir dist/es && tsc -p . -m commonjs --outDir dist/cjs",
     "schema": "typescript-json-schema src/types.ts Schema --out ./schema/0.0.3.json --aliasRefs true --required true --strictNullChecks true",
     "postbuild": "node ./scripts/create-build-package-json.js",
     "release": "npm publish --access public dist"
@@ -23,7 +24,7 @@
     "@types/marked": "4.0.3",
     "@types/react": "18.0.14",
     "@types/webpack": "4.41.32",
-    "typescript": "4.7.4",
+    "typescript": "5.7.3",
     "typescript-json-schema": "0.53.0"
   },
   "peerDependencies": {

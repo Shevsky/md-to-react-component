@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import { mdToReactServer } from './defaults';
 import type webpack from 'webpack';
 
-const schemaPath = require.resolve('./../runtime/schema');
+const cjsSchemaPath = require.resolve('./../../cjs/runtime/schema');
+const esSchemaPath = require.resolve('./../../es/runtime/schema');
 
 export class MdToReactWebpackPlugin {
   private readonly name: string = 'MdToReactWebpackPlugin';
@@ -13,7 +14,8 @@ export class MdToReactWebpackPlugin {
     compiler.hooks.beforeCompile.tap(this.name, (compilation) => {
       if (!applied) {
         applied = true;
-        fs.writeFileSync(schemaPath, mdToReactServer.renderSchemaToOutput());
+        fs.writeFileSync(cjsSchemaPath, mdToReactServer.renderSchemaToOutput('commonjs'));
+        fs.writeFileSync(esSchemaPath, mdToReactServer.renderSchemaToOutput('es'));
       }
     });
   }
