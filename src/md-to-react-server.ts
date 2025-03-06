@@ -132,7 +132,7 @@ export class MdToReactServer {
       case 'link': {
         return this.rendererToNodeOutput(
           this.schema.tokens.link.renderer,
-          { href: token.href },
+          { href: decodeHtmlEntities(token.href) },
           ...this.retrieveNodesOrTextFromToken(token, this.schema.tokens.link.wrapper)
         );
       }

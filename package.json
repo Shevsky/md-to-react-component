@@ -1,6 +1,6 @@
 {
   "name": "md-to-react-component",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "cjs/index.js",
   "types": "es/index.d.ts",
   "module": "es/index.js",
@@ -18,12 +18,13 @@
   "license": "MIT",
   "dependencies": {
     "cosmiconfig": "^7.0.1",
-    "marked": "^4.0.17"
+    "marked": "^4.3.0"
   },
   "devDependencies": {
     "@types/marked": "4.0.3",
     "@types/react": "18.0.14",
     "@types/webpack": "4.41.32",
+    "react": "18.2.0",
     "typescript": "5.7.3",
     "typescript-json-schema": "0.53.0"
   },
