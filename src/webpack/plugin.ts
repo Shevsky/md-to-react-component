@@ -1,4 +1,3 @@
-import { resolve } from 'path';
 import webpack from 'webpack';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
 import { mdToReactServer } from './defaults';
