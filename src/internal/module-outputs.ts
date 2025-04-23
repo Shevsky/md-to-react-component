@@ -3,13 +3,17 @@ import { ModuleType } from './../types';
 export function moduleOutputBoilerplate(module: ModuleType = 'es'): string {
   switch (module) {
     case 'commonjs': {
-      return '"use strict";\nObject.defineProperty(exports, "__esModule", { value: true });\n';
+      return [
+        '"use strict";',
+        'Object.defineProperty(exports, "__esModule", { value: true });',
+        moduleOutputComment(module)
+      ].join('\n');
     }
     case 'es': {
-      return '';
+      return moduleOutputComment(module);
     }
     default: {
-      return '';
+      return moduleOutputComment(module);
     }
   }
 }
@@ -40,4 +44,8 @@ export function moduleOutputExport(variable: string, module: ModuleType = 'es'):
       return '';
     }
   }
+}
+
+function moduleOutputComment(module: ModuleType = 'es'): string {
+  return `/* md-to-react-component module output ${module} */`;
 }
