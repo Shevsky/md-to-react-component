@@ -1,3 +1,11 @@
-// IT WILL BE REPLACED IN COMPILATION STAGE
+// Будет заменено в процессе компиляции с помощью VirtualModulesPlugin
 
-export * from './default-schema';
+import { type ComponentType } from 'react';
+import { type FullSchema } from './../types';
+
+throw new Error('You need to turn on MdToReactWebpackPlugin for use Markdown component');
+
+declare const externals: Record<string, Record<string, ComponentType<any>>>;
+declare const schema: FullSchema;
+
+export { externals, schema };

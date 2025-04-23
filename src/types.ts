@@ -42,5 +42,4 @@ export type Schema = {
   tokens?: Tokens;
 };
 
-/** @internal */
 export type FullSchema = { tokens: Required<Tokens> };

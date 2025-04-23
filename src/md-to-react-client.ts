@@ -2,7 +2,7 @@ import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
 import { parseCodespanToken } from './internal/parse-codespan-token';
-import { externals, schema } from './runtime/schema';
+import { externals as renderedExternals, schema as renderedSchema } from './runtime/schema';
 import { FullSchema, Renderer, Tokens } from './types';
 
 export class MdToReactClient {
@@ -151,4 +151,4 @@ export class MdToReactClient {
   }
 }
 
-export const mdToReactClient = new MdToReactClient(schema, externals);
+export const mdToReactClient = new MdToReactClient(renderedSchema, renderedExternals);
