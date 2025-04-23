@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
+import { ExternalExportNotFoundError, ExternalNotFoundError, MissingPropertyError } from './errors';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
 import { parseCodespanToken } from './internal/parse-codespan-token';
 import { externals as renderedExternals, schema as renderedSchema } from './runtime/schema';
@@ -39,7 +40,7 @@ export class MdToReactClient {
         switch (parsed.type) {
           case 'property': {
             if (!this.props || !(parsed.key in this.props)) {
-              throw new Error(`Missing "${parsed.key}" prop`);
+              throw new MissingPropertyError(parsed.key);
             }
 
             return this.props[parsed.key];
@@ -119,11 +120,20 @@ export class MdToReactClient {
   ): ReactNode {
     switch (renderer.type) {
       case 'component': {
-        return createElement(
-          this.externals[renderer.from][renderer.usedExport ?? 'default'],
-          { ...props, ...renderer.props },
-          ...childs
-        );
+        const lib = renderer.from;
+        const usedExport = renderer.usedExport ?? 'default';
+
+        const external = this.externals[lib];
+
+        if (!external) {
+          throw new ExternalNotFoundError(lib);
+        }
+
+        if (!external[usedExport]) {
+          throw new ExternalExportNotFoundError(lib, usedExport);
+        }
+
+        return createElement(external[usedExport], { ...props, ...renderer.props }, ...childs);
       }
       case 'tag': {
         return createElement(renderer.name, { ...props, ...renderer.props }, ...childs);
