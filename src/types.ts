@@ -1,16 +1,35 @@
 export type ModuleType = 'es' | 'commonjs';
 
+export type PropsDefinition = Record<string, any>;
+
+export type ConditionalPropsDefinition = {
+  default: PropsDefinition;
+  conditional: Array<{
+    when: Record<
+      string,
+      {
+        matches?: string | Array<string>;
+        is?: 'nullish';
+      }
+    >;
+    then: PropsDefinition;
+    otherwise: PropsDefinition;
+  }>;
+};
+
+export type AnyPropsDefinition = PropsDefinition | ConditionalPropsDefinition;
+
 export type Renderer =
   | {
       type: 'component';
       from: string;
       usedExport?: string;
-      props?: object;
+      props?: AnyPropsDefinition;
     }
   | {
       type: 'tag';
       name: string;
-      props?: object;
+      props?: AnyPropsDefinition;
     }
   | {
       type: 'fragment' | 'string' | 'null';

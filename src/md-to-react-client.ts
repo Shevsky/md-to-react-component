@@ -2,9 +2,10 @@ import { marked } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
 import { ExternalExportNotFoundError, ExternalNotFoundError, MissingPropertyError } from './errors';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { mergeComponentProps } from './internal/merge-component-props';
 import { parseCodespanToken } from './internal/parse-codespan-token';
 import { externals as renderedExternals, schema as renderedSchema } from './runtime/schema';
-import { FullSchema, Renderer, Tokens } from './types';
+import { FullSchema, PropsDefinition, Renderer, Tokens } from './types';
 
 export class MdToReactClient {
   private props?: Record<string, any>;
@@ -113,11 +114,7 @@ export class MdToReactClient {
     return [];
   }
 
-  private rendererToNode(
-    renderer: Renderer,
-    props?: Record<string, any> | null,
-    ...childs: Array<ReactNode>
-  ): ReactNode {
+  private rendererToNode(renderer: Renderer, props: PropsDefinition | null, ...childs: Array<ReactNode>): ReactNode {
     switch (renderer.type) {
       case 'component': {
         const lib = renderer.from;
@@ -133,10 +130,10 @@ export class MdToReactClient {
           throw new ExternalExportNotFoundError(lib, usedExport);
         }
 
-        return createElement(external[usedExport], { ...props, ...renderer.props }, ...childs);
+        return createElement(external[usedExport], mergeComponentProps(props, renderer.props), ...childs);
       }
       case 'tag': {
-        return createElement(renderer.name, { ...props, ...renderer.props }, ...childs);
+        return createElement(renderer.name, mergeComponentProps(props, renderer.props), ...childs);
       }
       case 'fragment': {
         return createElement(Fragment, null, ...childs);

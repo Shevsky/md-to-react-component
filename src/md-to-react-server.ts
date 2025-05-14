@@ -1,11 +1,12 @@
 import { marked } from 'marked';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
+import { mergeComponentProps } from './internal/merge-component-props';
 import { moduleOutputBoilerplate, moduleOutputDefaultExport, moduleOutputExport } from './internal/module-outputs';
 import { parseCodespanToken } from './internal/parse-codespan-token';
 import { ImportsCollector } from './internal/imports-collector';
 import { makeSchema } from './internal/make-schema';
 import { PropsCollector } from './internal/props-collector';
-import { FullSchema, ModuleType, Renderer, Schema, Tokens } from './types';
+import { FullSchema, ModuleType, PropsDefinition, Renderer, Schema, Tokens } from './types';
 
 export class MdToReactServer {
   private readonly schema: FullSchema;
@@ -93,7 +94,7 @@ export class MdToReactServer {
       case 'space':
       case 'br':
       case 'hr': {
-        return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer);
+        return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer, null);
       }
       case 'codespan': {
         const parsed = parseCodespanToken(token.text);
@@ -172,21 +173,21 @@ export class MdToReactServer {
     return [];
   }
 
-  private rendererToNodeOutput(
-    renderer: Renderer,
-    props?: Record<string, any> | null,
-    ...childs: Array<string>
-  ): string {
+  private rendererToNodeOutput(renderer: Renderer, props: PropsDefinition | null, ...childs: Array<string>): string {
     switch (renderer.type) {
       case 'component': {
         return this.makeCreateElementOutput(
           this.imports.retrieveExportFromImports(renderer.from, renderer.usedExport ?? 'default'),
-          { ...props, ...renderer.props },
+          mergeComponentProps(props, renderer.props),
           ...childs
         );
       }
       case 'tag': {
-        return this.makeCreateElementOutput(JSON.stringify(renderer.name), { ...props, ...renderer.props }, ...childs);
+        return this.makeCreateElementOutput(
+          JSON.stringify(renderer.name),
+          mergeComponentProps(props, renderer.props),
+          ...childs
+        );
       }
       case 'fragment': {
         return this.makeCreateElementOutput(
