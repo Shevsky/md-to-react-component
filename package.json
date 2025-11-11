@@ -1,6 +1,6 @@
 {
   "name": "md-to-react-component",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "main": "cjs/index.js",
   "types": "es/index.d.ts",
   "module": "es/index.js",

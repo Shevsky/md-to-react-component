@@ -50,6 +50,7 @@ export type Tokens = {
   paragraph?: { renderer: Renderer };
   strong?: { renderer: Renderer };
   em?: { renderer: Renderer };
+  del?: { renderer: Renderer };
   text?: { renderer: Renderer };
   link?: { renderer: Renderer; wrapper: Renderer };
   ol?: { renderer: Renderer };

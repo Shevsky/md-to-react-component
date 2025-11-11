@@ -123,6 +123,7 @@ export class MdToReactServer {
       case 'paragraph':
       case 'strong':
       case 'em':
+      case 'del':
       case 'text': {
         return this.rendererToNodeOutput(
           this.schema.tokens[token.type].renderer,

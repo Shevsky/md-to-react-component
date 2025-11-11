@@ -64,6 +64,7 @@ export class MdToReactClient {
       case 'paragraph':
       case 'strong':
       case 'em':
+      case 'del':
       case 'text': {
         return this.rendererToNode(
           this.schema.tokens[token.type].renderer,
