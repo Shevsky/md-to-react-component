@@ -19,6 +19,7 @@ const defaultSchema: FullSchema = {
     paragraph: { renderer: { type: 'tag', name: 'p' } },
     strong: { renderer: { type: 'tag', name: 'strong' } },
     em: { renderer: { type: 'tag', name: 'i' } },
+    del: { renderer: { type: 'tag', name: 's' } },
     text: { renderer: { type: 'string' } },
     link: { renderer: { type: 'tag', name: 'a' }, wrapper: null! },
     ol: { renderer: { type: 'tag', name: 'ol' } },
