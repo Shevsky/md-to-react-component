@@ -1,10 +1,10 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 class MdToReactError extends Error {
+  name = 'MdToReactError ' as const;
+
   constructor(code: string, message?: string | false) {
     super(`MdToReactError ${code}${message ? `: ${message}` : ''}`);
-
-    this.name = 'MdToReactError';
   }
 }
 
