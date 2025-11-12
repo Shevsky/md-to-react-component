@@ -91,7 +91,11 @@ export class MdToReactServer {
 
   private tokenToNodeOutput(token: Token): string {
     switch (token.type) {
-      case 'space':
+      case 'space': {
+        const countSpaces = (token.raw.match(/\n/g) || []).length;
+
+        return this.rendererToNodeOutput(this.schema.tokens.space.renderer, { countSpaces });
+      }
       case 'br':
       case 'hr': {
         return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer, null);
@@ -117,7 +121,9 @@ export class MdToReactServer {
         return this.rendererToNodeOutput(
           this.schema.tokens.code.renderer,
           { language: token.lang, codeBlockStyle: token.codeBlockStyle },
-          this.schema.tokens.code.wrapper ? this.rendererToNodeOutput(this.schema.tokens.code.wrapper, null, token.text) : token.text
+          this.schema.tokens.code.wrapper
+            ? this.rendererToNodeOutput(this.schema.tokens.code.wrapper, null, token.text)
+            : token.text
         );
       }
       case 'heading': {
