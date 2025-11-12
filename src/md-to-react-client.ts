@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { marked, Token } from 'marked';
 import { ComponentType, createElement, Fragment, ReactNode } from 'react';
 import { ExternalExportNotFoundError, ExternalNotFoundError, MissingPropertyError } from './errors';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
@@ -28,7 +28,7 @@ export class MdToReactClient {
     return this.rendererToNode(this.schema.tokens.root.renderer, null, ...tokensList.map(this.tokenToNode));
   }
 
-  private tokenToNode(token: marked.Token): ReactNode {
+  private tokenToNode(token: Token): ReactNode {
     switch (token.type) {
       case 'space':
       case 'br':
@@ -53,6 +53,13 @@ export class MdToReactClient {
             return null;
           }
         }
+      }
+      case 'code': {
+        return this.rendererToNode(
+          this.schema.tokens.code.renderer,
+          { language: token.lang, codeBlockStyle: token.codeBlockStyle },
+          this.schema.tokens.code.wrapper ? this.rendererToNode(this.schema.tokens.code.wrapper, null, token.text) : token.text
+        );
       }
       case 'heading': {
         return this.rendererToNode(
@@ -88,7 +95,7 @@ export class MdToReactClient {
       case 'list_item': {
         return this.rendererToNode(
           this.schema.tokens.li.renderer,
-          null,
+          { task: !!token.task, checked: !!token.checked, loose: !!token.loose },
           ...this.retrieveNodesOrTextFromToken(token, this.schema.tokens.li.wrapper)
         );
       }
@@ -98,7 +105,7 @@ export class MdToReactClient {
     }
   }
 
-  private retrieveNodesOrTextFromToken(token: marked.Token, wrapper?: Renderer): Array<ReactNode> {
+  private retrieveNodesOrTextFromToken(token: Token, wrapper?: Renderer): Array<ReactNode> {
     const anyToken = token as any;
 
     if (anyToken.tokens?.length) {

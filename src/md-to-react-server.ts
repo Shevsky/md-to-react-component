@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { marked, Token } from 'marked';
 import { decodeHtmlEntities } from './internal/decode-html-entities';
 import { mergeComponentProps } from './internal/merge-component-props';
 import { moduleOutputBoilerplate, moduleOutputDefaultExport, moduleOutputExport } from './internal/module-outputs';
@@ -89,7 +89,7 @@ export class MdToReactServer {
     return output;
   }
 
-  private tokenToNodeOutput(token: marked.Token): string {
+  private tokenToNodeOutput(token: Token): string {
     switch (token.type) {
       case 'space':
       case 'br':
@@ -112,6 +112,13 @@ export class MdToReactServer {
             return 'null';
           }
         }
+      }
+      case 'code': {
+        return this.rendererToNodeOutput(
+          this.schema.tokens.code.renderer,
+          { language: token.lang, codeBlockStyle: token.codeBlockStyle },
+          this.schema.tokens.code.wrapper ? this.rendererToNodeOutput(this.schema.tokens.code.wrapper, null, token.text) : token.text
+        );
       }
       case 'heading': {
         return this.rendererToNodeOutput(
@@ -147,7 +154,7 @@ export class MdToReactServer {
       case 'list_item': {
         return this.rendererToNodeOutput(
           this.schema.tokens.li.renderer,
-          null,
+          { task: !!token.task, checked: !!token.checked, loose: !!token.loose },
           ...this.retrieveNodesOrTextFromToken(token, this.schema.tokens.li.wrapper)
         );
       }
@@ -157,7 +164,7 @@ export class MdToReactServer {
     }
   }
 
-  private retrieveNodesOrTextFromToken(token: marked.Token, wrapper?: Renderer): Array<string> {
+  private retrieveNodesOrTextFromToken(token: Token, wrapper?: Renderer): Array<string> {
     const anyToken = token as any;
 
     if (anyToken.tokens?.length) {
