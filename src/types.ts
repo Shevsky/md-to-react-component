@@ -48,6 +48,7 @@ export type Tokens = {
   h6?: { renderer: Renderer };
   codespan?: { renderer: Renderer };
   paragraph?: { renderer: Renderer };
+  blockquote?: { renderer: Renderer };
   strong?: { renderer: Renderer };
   em?: { renderer: Renderer };
   del?: { renderer: Renderer };

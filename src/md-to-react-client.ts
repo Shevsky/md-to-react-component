@@ -62,6 +62,7 @@ export class MdToReactClient {
         );
       }
       case 'paragraph':
+      case 'blockquote':
       case 'strong':
       case 'em':
       case 'del':

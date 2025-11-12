@@ -17,6 +17,7 @@ const defaultSchema: FullSchema = {
     h6: { renderer: { type: 'tag', name: 'h6' } },
     codespan: { renderer: { type: 'tag', name: 'code' } },
     paragraph: { renderer: { type: 'tag', name: 'p' } },
+    blockquote: { renderer: { type: 'tag', name: 'blockquote' } },
     strong: { renderer: { type: 'tag', name: 'strong' } },
     em: { renderer: { type: 'tag', name: 'i' } },
     del: { renderer: { type: 'tag', name: 's' } },

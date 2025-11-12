@@ -121,6 +121,7 @@ export class MdToReactServer {
         );
       }
       case 'paragraph':
+      case 'blockquote':
       case 'strong':
       case 'em':
       case 'del':
