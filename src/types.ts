@@ -40,6 +40,7 @@ export type Tokens = {
   space?: { renderer: Renderer };
   hr?: { renderer: Renderer };
   br?: { renderer: Renderer };
+  table?: { renderer: Renderer };
   h1?: { renderer: Renderer };
   h2?: { renderer: Renderer };
   h3?: { renderer: Renderer };
