@@ -100,6 +100,25 @@ export class MdToReactServer {
       case 'hr': {
         return this.rendererToNodeOutput(this.schema.tokens[token.type].renderer, null);
       }
+      case 'table': {
+        const headerCells = Array.isArray(token.header) ? token.header : [];
+        const rowCells = Array.isArray(token.rows) ? token.rows : [];
+        const align = Array.isArray(token.align) ? token.align : [];
+
+        const header = headerCells.map((cell) => ({
+          align: cell?.align ?? null,
+          nodes: Array.isArray(cell?.tokens) ? cell.tokens.map(this.tokenToNodeOutput) : []
+        }));
+
+        const rows = rowCells.map((row) =>
+          (Array.isArray(row) ? row : []).map((cell) => ({
+            align: cell?.align ?? null,
+            nodes: Array.isArray(cell?.tokens) ? cell.tokens.map(this.tokenToNodeOutput) : []
+          }))
+        );
+
+        return this.rendererToNodeOutput(this.schema.tokens.table.renderer, { align, header, rows });
+      }
       case 'codespan': {
         const parsed = parseCodespanToken(token.text);
 

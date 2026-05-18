@@ -1,6 +1,56 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "AnyPropsDefinition": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/PropsDefinition"
+                },
+                {
+                    "properties": {
+                        "conditional": {
+                            "$ref": "#/definitions/Array"
+                        },
+                        "default": {
+                            "$ref": "#/definitions/PropsDefinition"
+                        }
+                    },
+                    "required": [
+                        "conditional",
+                        "default"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
+        "Array": {
+            "items": {
+                "properties": {
+                    "otherwise": {
+                        "$ref": "#/definitions/PropsDefinition"
+                    },
+                    "then": {
+                        "$ref": "#/definitions/PropsDefinition"
+                    },
+                    "when": {
+                        "$ref": "#/definitions/Record"
+                    }
+                },
+                "required": [
+                    "otherwise",
+                    "then",
+                    "when"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "PropsDefinition": {
+            "type": "object"
+        },
+        "Record": {
+            "$ref": "#/definitions/__type"
+        },
         "Renderer": {
             "anyOf": [
                 {
@@ -9,9 +59,7 @@
                             "type": "string"
                         },
                         "props": {
-                            "additionalProperties": true,
-                            "properties": {},
-                            "type": "object"
+                            "$ref": "#/definitions/AnyPropsDefinition"
                         },
                         "type": {
                             "enum": [
@@ -35,9 +83,7 @@
                             "type": "string"
                         },
                         "props": {
-                            "additionalProperties": true,
-                            "properties": {},
-                            "type": "object"
+                            "$ref": "#/definitions/AnyPropsDefinition"
                         },
                         "type": {
                             "enum": [
@@ -72,6 +118,17 @@
         },
         "Tokens": {
             "properties": {
+                "blockquote": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
                 "br": {
                     "properties": {
                         "renderer": {
@@ -83,7 +140,33 @@
                     ],
                     "type": "object"
                 },
+                "code": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        },
+                        "wrapper": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer",
+                        "wrapper"
+                    ],
+                    "type": "object"
+                },
                 "codespan": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
+                "del": {
                     "properties": {
                         "renderer": {
                             "$ref": "#/definitions/Renderer"
@@ -267,6 +350,17 @@
                     ],
                     "type": "object"
                 },
+                "table": {
+                    "properties": {
+                        "renderer": {
+                            "$ref": "#/definitions/Renderer"
+                        }
+                    },
+                    "required": [
+                        "renderer"
+                    ],
+                    "type": "object"
+                },
                 "text": {
                     "properties": {
                         "renderer": {
@@ -290,6 +384,9 @@
                     "type": "object"
                 }
             },
+            "type": "object"
+        },
+        "__type": {
             "type": "object"
         }
     },
