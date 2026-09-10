@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Shevsky/md-to-react-component/compare/v1.1.2...v1.1.3) (2026-09-10)
+
+
+### Bug Fixes
+
+* поправил вызов с внутренними токенами ([943e36b](https://github.com/Shevsky/md-to-react-component/commit/943e36b8f63ea058228ebe875d29736b9441f178))
+
 ## [1.1.2](https://github.com/Shevsky/md-to-react-component/compare/v1.1.1...v1.1.2) (2026-09-10)
 
 
