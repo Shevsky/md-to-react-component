@@ -12,6 +12,8 @@ export class Markdown extends PureComponent<MarkdownProps> {
   render(): ReactNode {
     const { markdown, onRenderToken, ...props } = this.props;
 
+    //
+
     return mdToReactClient.renderSourceToNode(markdown, props, { tokenRenderer: onRenderToken });
   }
 }
