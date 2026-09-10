@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Shevsky/md-to-react-component/compare/v1.1.1...v1.1.2) (2026-09-10)
+
+
+### Bug Fixes
+
+* force ci ([e5ce37c](https://github.com/Shevsky/md-to-react-component/commit/e5ce37c0ccd4fbc7b063bfc6868472384cf42bc4))
+
 ## [1.1.1](https://github.com/Shevsky/md-to-react-component/compare/v1.1.0...v1.1.1) (2026-09-10)
 
 
