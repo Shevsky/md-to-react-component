@@ -13,6 +13,7 @@ export type RenderSourceOptions = {
 
 export class MdToReactClient {
   private props?: Record<string, any>;
+  private options?: RenderSourceOptions;
 
   constructor(
     private readonly schema: FullSchema,
@@ -20,22 +21,35 @@ export class MdToReactClient {
   ) {
     this.renderSourceToNode = this.renderSourceToNode.bind(this);
     this.tokenToNode = this.tokenToNode.bind(this);
+    this.defaultTokenToNode = this.defaultTokenToNode.bind(this);
     this.retrieveNodesOrTextFromToken = this.retrieveNodesOrTextFromToken.bind(this);
     this.rendererToNode = this.rendererToNode.bind(this);
   }
 
   renderSourceToNode(source: string, props?: Record<string, any>, options?: RenderSourceOptions): ReactNode {
     this.props = props;
+    this.options = options;
 
-    const tokensList = marked.lexer(source);
-    const nodes = tokensList.map(
-      options?.tokenRenderer ? (token) => options!.tokenRenderer!(token, this.tokenToNode) : this.tokenToNode
-    );
+    try {
+      const tokensList = marked.lexer(source);
+      const nodes = tokensList.map(this.tokenToNode);
 
-    return this.rendererToNode(this.schema.tokens.root.renderer, null, ...nodes);
+      return this.rendererToNode(this.schema.tokens.root.renderer, null, ...nodes);
+    } finally {
+      this.props = undefined;
+      this.options = undefined;
+    }
   }
 
   private tokenToNode(token: Token): ReactNode {
+    if (this.options?.tokenRenderer) {
+      return this.options.tokenRenderer(token, this.defaultTokenToNode);
+    }
+
+    return this.defaultTokenToNode(token);
+  }
+
+  private defaultTokenToNode(token: Token): ReactNode {
     switch (token.type) {
       case 'space': {
         const countSpaces = (token.raw.match(/\n/g) || []).length;
