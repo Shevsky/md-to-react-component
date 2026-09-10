@@ -7,6 +7,10 @@ import { parseCodespanToken } from './internal/parse-codespan-token';
 import { externals as renderedExternals, schema as renderedSchema } from './runtime/schema';
 import { FullSchema, PropsDefinition, Renderer, Tokens } from './types';
 
+export type RenderSourceOptions = {
+  tokenRenderer?: (token: Token, defaultRenderer: (token: Token) => ReactNode) => ReactNode;
+};
+
 export class MdToReactClient {
   private props?: Record<string, any>;
 
@@ -20,12 +24,15 @@ export class MdToReactClient {
     this.rendererToNode = this.rendererToNode.bind(this);
   }
 
-  renderSourceToNode(source: string, props?: Record<string, any>): ReactNode {
+  renderSourceToNode(source: string, props?: Record<string, any>, options?: RenderSourceOptions): ReactNode {
     this.props = props;
 
     const tokensList = marked.lexer(source);
+    const nodes = tokensList.map(
+      options?.tokenRenderer ? (token) => options!.tokenRenderer!(token, this.tokenToNode) : this.tokenToNode
+    );
 
-    return this.rendererToNode(this.schema.tokens.root.renderer, null, ...tokensList.map(this.tokenToNode));
+    return this.rendererToNode(this.schema.tokens.root.renderer, null, ...nodes);
   }
 
   private tokenToNode(token: Token): ReactNode {

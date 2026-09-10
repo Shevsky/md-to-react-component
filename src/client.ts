@@ -1,15 +1,18 @@
 import { PureComponent, ReactNode } from 'react';
-import { mdToReactClient, MdToReactClient } from './md-to-react-client';
+import { mdToReactClient, MdToReactClient, RenderSourceOptions } from './md-to-react-client';
 
 export { mdToReactClient, MdToReactClient };
 
-type TMarkdownProps = { markdown: string } & Record<string, any>;
+type MarkdownProps = {
+  markdown: string;
+  onRenderToken?: RenderSourceOptions['tokenRenderer'];
+} & Record<string, any>;
 
-export class Markdown extends PureComponent<TMarkdownProps> {
+export class Markdown extends PureComponent<MarkdownProps> {
   render(): ReactNode {
-    const { markdown, ...props } = this.props;
+    const { markdown, onRenderToken, ...props } = this.props;
 
-    return mdToReactClient.renderSourceToNode(markdown, props);
+    return mdToReactClient.renderSourceToNode(markdown, props, { tokenRenderer: onRenderToken });
   }
 }
 
