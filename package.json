@@ -1,6 +1,6 @@
 {
   "name": "md-to-react-component",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "main": "cjs/index.js",
   "types": "es/index.d.ts",
   "module": "es/index.js",
@@ -17,6 +17,7 @@
   "author": "Konstantin Shevsky",
   "license": "MIT",
   "dependencies": {
+    "@rspack/core": "^2.2.9",
     "cosmiconfig": "^7.0.1",
     "marked": "^17.0.0",
     "webpack-virtual-modules": "^0.6.2"
