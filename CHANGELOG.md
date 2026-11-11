@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/Shevsky/md-to-react-component/compare/v1.1.3...v1.2.0) (2026-11-11)
+
+
+### Bug Fixes
+
+* обновил lock файл ([6f5ce87](https://github.com/Shevsky/md-to-react-component/commit/6f5ce8784dcfa36ed0c562d573bdad2949710275))
+* поднял версию + фиксация версии рспака ([ed87d4d](https://github.com/Shevsky/md-to-react-component/commit/ed87d4d80474be5149f11706512881ecdbbef93a))
+
+
+### Features
+
+* добавил плагин для rspack ([ffc2d54](https://github.com/Shevsky/md-to-react-component/commit/ffc2d54e7dd349f2e8f6a94bd001581ec0e6f954))
+
 ## [1.1.3](https://github.com/Shevsky/md-to-react-component/compare/v1.1.2...v1.1.3) (2026-09-10)
 
 
